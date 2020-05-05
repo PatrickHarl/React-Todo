@@ -1,6 +1,7 @@
 import React from 'react';
 import Todo from './components/Todo'
 import TodoList from './components/TodoList'
+import Search from './components/Search'
 
 const todoData = [
   {
@@ -30,10 +31,22 @@ class App extends React.Component {
     this.state = {
 
       todo:todoData,
+      todoName:'',
+      searchTerm:''
 
     }
   }
   
+  handleChange = (e) => {
+
+    this.setState({
+
+      [e.target.name]: e.target.value
+
+    })
+
+  }
+
   toggleCompleted = (taskId) => {
 
     const taskIndex = this.state.todo.findIndex(taskElement => taskElement.id === taskId)
@@ -90,11 +103,24 @@ class App extends React.Component {
 
   }
 
+  submitForm = (e) => {
+
+    e.preventDefault()
+
+    this.addToList(this.state.todoName)   
+    this.setState({
+
+        todoName: ''
+
+    }) 
+
+}
+
   render() {
     return (
       <div>
         <h2>Welcome to your Todo App!</h2>
-        <TodoList clearCompleted={this.clearCompleted} toggleCompleted={this.toggleCompleted} addToList={this.addToList} todo={this.state.todo} />
+        <TodoList todoName={this.state.todoName} submitForm={this.submitForm} handleChange={this.handleChange} clearCompleted={this.clearCompleted} toggleCompleted={this.toggleCompleted} addToList={this.addToList} todo={this.state.todo} searchTerm={this.state.searchTerm} />
       </div>
     );
   }

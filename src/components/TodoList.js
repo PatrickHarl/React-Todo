@@ -3,8 +3,12 @@
 import React from 'react'
 import Todo from './Todo'
 import TodoForm from './TodoForm'
+import Search from './Search'
 
 class TodoList extends React.Component {
+    
+
+   
 
   render() {
 
@@ -15,12 +19,20 @@ class TodoList extends React.Component {
 
         <div>
 
+            <Search searchTerm={this.props.searchTerm} handleChange={this.props.handleChange} />
+            
             {this.props.todo.map(task => {
 
+                if(task.task.includes(this.props.searchTerm))
+                {
                 return <Todo toggleCompleted={this.props.toggleCompleted} task={task} />
+                }
 
-            })}
-            <TodoForm clearCompleted={this.props.clearCompleted} addToList={this.props.addToList} />
+            })
+        }
+            
+            
+            <TodoForm submitForm={this.props.submitForm} todoName={this.props.todoName} handleChange={this.props.handleChange} clearCompleted={this.props.clearCompleted} addToList={this.props.addToList} />
             
         </div>
 
